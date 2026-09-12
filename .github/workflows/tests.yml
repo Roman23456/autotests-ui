@@ -36,6 +36,8 @@ jobs:
 
       # 4. Шаг для запуска тестов с использованием pytest и генерации отчётов Allure
       - name: Run Playwright tests with pytest and generate Allure results
+        env:
+          HEADLESS: "true"  # На раннере GitHub Actions нет X-сервера, поэтому принудительно запускаем браузеры в headless-режиме
         run: |
           pytest -m regression --alluredir=allure-results --numprocesses 2  # Запускаем тесты, отмеченные как "regression", генерируем результаты для Allure
 
