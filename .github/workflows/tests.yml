@@ -28,6 +28,8 @@ jobs:
           playwright install --with-deps
 
       - name: Run Playwright tests with pytest and generate Allure results
+        env:
+          HEADLESS: "true"
         run: |
           pytest -m regression --alluredir=allure-results --numprocesses 2
 
@@ -58,7 +60,7 @@ jobs:
           path: allure-results
 
       - name: Generates Allure Report with history
-        uses: simple-elf/allure-report-action@v1.7
+        uses: simple-elf/allure-report-action@v1.15
         if: always()
         with:
           allure_results: allure-results
