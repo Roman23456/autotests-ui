@@ -9,8 +9,13 @@ __pycache__
 allure-results
 allure-report
 
+# ui coverage
+ui-coverage-results
+ui-coverage-report
+
 # testing artifacts
 *.html
 *.json
 videos
 tracing
+.coverage

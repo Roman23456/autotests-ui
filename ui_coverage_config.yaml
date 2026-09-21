@@ -1,0 +1,9 @@
+apps:
+  - key: "autotests-ui"
+    url: "https://nikita-filonov.github.io/qa-automation-engineer-ui-course"
+    name: "Autotests UI"
+
+results_dir: "./ui-coverage-results"
+history_file: "./ui-coverage-report/coverage-history.json"
+html_report_file: "./ui-coverage-report/index.html"
+json_report_file: "./ui-coverage-report/coverage-report.json"
