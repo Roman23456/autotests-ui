@@ -9,13 +9,16 @@ __pycache__
 allure-results
 allure-report
 
-# ui coverage
-ui-coverage-results
-ui-coverage-report
-
-# testing artifacts
+# testing
 *.html
 *.json
 videos
 tracing
-.coverage
+
+# coverage
+coverage.html
+coverage-results
+coverage-report.json
+coverage-history.json
+
+.DS_Store
