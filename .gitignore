@@ -22,3 +22,6 @@ coverage-report.json
 coverage-history.json
 
 .DS_Store
+
+# secrets
+.env.ai-review

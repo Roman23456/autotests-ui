@@ -1,0 +1,37 @@
+name: AI Review
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install AI Review
+        run: |
+          python -m pip install --upgrade pip
+          pip install xai-review
+
+      - name: Run AI Review
+        env:
+          LLM__HTTP_CLIENT__API_TOKEN: ${{ secrets.ANTHROPIC_API_KEY }}
+          VCS__HTTP_CLIENT__API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VCS__PIPELINE__OWNER: ${{ github.repository_owner }}
+          VCS__PIPELINE__REPO: ${{ github.event.repository.name }}
+          VCS__PIPELINE__PULL_NUMBER: ${{ github.event.pull_request.number }}
+        run: ai-review run

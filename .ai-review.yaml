@@ -1,0 +1,49 @@
+# ===============================
+# AI Review configuration file
+# ===============================
+# Секреты и параметры PR в этот файл НЕ пишем — YAML не подставляет ${VAR}.
+# Они задаются переменными окружения (в CI — в workflow, локально — в .env.ai-review,
+# запуск: AI_REVIEW_CONFIG_FILE_ENV=.env.ai-review ai-review run):
+#   LLM__HTTP_CLIENT__API_TOKEN   — ключ Anthropic API
+#   VCS__HTTP_CLIENT__API_TOKEN   — токен GitHub
+#   VCS__PIPELINE__OWNER / VCS__PIPELINE__REPO / VCS__PIPELINE__PULL_NUMBER
+
+llm:
+  provider: CLAUDE
+  meta:
+    model: claude-sonnet-5-5      # Дешевле/быстрее: claude-haiku-4-5
+    max_tokens: 4000              # Максимальное количество токенов в ответе
+    temperature: 0.2              # Строгость ответов (0 — максимально детерминированный)
+  http_client:
+    api_url: https://api.anthropic.com
+    timeout: 120
+
+vcs:
+  provider: GITHUB
+  http_client:
+    api_url: https://api.github.com
+    timeout: 120
+
+core:
+  concurrency: 5                  # Количество параллельных запросов к LLM и VCS
+
+review:
+  mode: FULL_FILE_DIFF            # Что анализировать: diff с контекстом файла
+  dry_run: false                  # true — ревью выполняется, но комментарии не публикуются
+  max_inline_comments: 20         # Ограничение на количество inline-комментариев
+
+prompt:
+  # Переменные контекста, доступные в промптах как <<name>>
+  context:
+    project_name: "autotests-ui"
+    tech_stack: "Python, Playwright, pytest, Allure, Pydantic"
+
+  inline_prompt_files:
+    - ./configs/prompts/inline.md
+  context_prompt_files:
+    - ./configs/prompts/context.md
+  summary_prompt_files:
+    - ./configs/prompts/summary.md
+
+logger:
+  level: INFO
